@@ -15,7 +15,7 @@ function App() {
     <Container>
       <GlobalStyle />
       <Header light={light} setLight={setLight} />
-      <Filter setString={setString} setPage={setPage} />
+      <Filter setString={setString} />
       <List
         data={data}
         setData={setData}

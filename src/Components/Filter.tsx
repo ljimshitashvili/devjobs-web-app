@@ -3,10 +3,9 @@ import { bgFilter, searchIconMOB } from "../assets/index";
 
 interface Props {
   setString: (filterString: string) => void;
-  setPage: (page: number) => void;
 }
 
-const Filter = ({ setString, setPage }: Props) => {
+const Filter = ({ setString }: Props) => {
   const filter = (e: React.ChangeEvent<HTMLInputElement>) => {
     setString(e.target.value);
   };

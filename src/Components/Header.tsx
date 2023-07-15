@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { logo, sun, moon } from "../assets";
+import { logo, sun, moon } from "../assets/index";
 
 const Header = () => {
   return (

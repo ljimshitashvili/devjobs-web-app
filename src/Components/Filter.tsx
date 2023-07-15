@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { bgFilter, searchIconMOB } from "../assets";
+import { bgFilter, searchIconMOB } from "../assets/index";
 
 const Filter = () => {
   return (

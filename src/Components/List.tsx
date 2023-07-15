@@ -15,7 +15,7 @@ const List = ({ data, setData, filterString, page, setPage }: Props) => {
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get(
-        `http://localhost:3000/api/get/6/${page}`
+        `https://devjobs-web-app-api-production.up.railway.app/api/get/6/${page}`
       );
       const data = response.data;
       setData(data);

@@ -1,10 +1,19 @@
 import styled from "styled-components";
 import { bgFilter, searchIconMOB } from "../assets/index";
 
-const Filter = () => {
+interface Props {
+  setString: (filterString: string) => void;
+  setPage: (page: number) => void;
+}
+
+const Filter = ({ setString, setPage }: Props) => {
+  const filter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setString(e.target.value);
+  };
+
   return (
     <FilterContainer>
-      <input type="text" placeholder="Filter by title..." />
+      <input onChange={filter} type="text" placeholder="Filter by title..." />
       <div>
         <img src={bgFilter} alt="Filter Icon" />
         <img src={searchIconMOB} alt="" />

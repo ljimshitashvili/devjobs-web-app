@@ -8,13 +8,21 @@ import { DevJob } from "./types";
 function App() {
   const [data, setData] = useState<DevJob[] | []>([]);
   const [light, setLight] = useState<boolean>(true);
+  const [filterString, setString] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
 
   return (
     <Container>
       <GlobalStyle />
       <Header light={light} setLight={setLight} />
-      <Filter />
-      <List data={data} setData={setData} />
+      <Filter setString={setString} setPage={setPage} />
+      <List
+        data={data}
+        setData={setData}
+        filterString={filterString}
+        page={page}
+        setPage={setPage}
+      />
     </Container>
   );
 }

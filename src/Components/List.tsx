@@ -1,16 +1,17 @@
 import { styled } from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { DevJob } from "../types";
 
 interface Props {
   data: DevJob[] | [];
   setData: (data: DevJob[]) => void;
+  filterString: string;
+  page: number;
+  setPage: (page: number) => void;
 }
 
-const List = ({ data, setData }: Props) => {
-  const [page, setPage] = useState<number>(1);
-
+const List = ({ data, setData, filterString, page, setPage }: Props) => {
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get(
@@ -22,28 +23,39 @@ const List = ({ data, setData }: Props) => {
     getData();
   }, [page]);
 
-  const loadMore = async () => {
+  useEffect(() => {
+    if (filterString === "") {
+      setPage(1);
+    } else {
+      setPage(3);
+    }
+  }, [filterString]);
+
+  const loadMore = () => {
     setPage(page + 1);
-    console.log(page);
   };
 
   return (
     <Container>
-      {data.map((data, index) => (
-        <div className="card" key={index}>
-          <Logo bgColor={data.logoBackground}>
-            <img src={data.logo} alt="Company Logo" />
-          </Logo>
-          <div className="postedAtAndContract">
-            <h1 className="postedAt">{data.postedAt}</h1>
-            <div className="dot"></div>
-            <h1 className="contract">{data.contract}</h1>
+      {data
+        .filter((data) =>
+          data.position.toLowerCase().includes(filterString.toLowerCase())
+        )
+        .map((data, index) => (
+          <div className="card" key={index}>
+            <Logo bgColor={data.logoBackground}>
+              <img src={data.logo} alt="Company Logo" />
+            </Logo>
+            <div className="postedAtAndContract">
+              <h1 className="postedAt">{data.postedAt}</h1>
+              <div className="dot"></div>
+              <h1 className="contract">{data.contract}</h1>
+            </div>
+            <h1 className="position">{data.position}</h1>
+            <h1 className="company">{data.company}</h1>
+            <h1 className="location">{data.location}</h1>
           </div>
-          <h1 className="position">{data.position}</h1>
-          <h1 className="company">{data.company}</h1>
-          <h1 className="location">{data.location}</h1>
-        </div>
-      ))}
+        ))}
       <More onClick={loadMore}>Load More</More>
     </Container>
   );

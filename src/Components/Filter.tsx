@@ -30,6 +30,7 @@ const FilterContainer = styled.div`
     max-width: 327px;
     border-radius: 6px;
     border: none;
+    padding-left: 24px;
   }
 
   ::placeholder {

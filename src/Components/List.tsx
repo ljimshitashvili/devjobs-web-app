@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { DevJob } from "../types";
 
@@ -9,17 +9,23 @@ interface Props {
 }
 
 const List = ({ data, setData }: Props) => {
-  const link = "http://localhost:3000/api/get/6/1";
+  const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
     const getData = async () => {
-      const response = await axios.get(link);
+      const response = await axios.get(
+        `http://localhost:3000/api/get/6/${page}`
+      );
       const data = response.data;
       setData(data);
-      console.log(data);
     };
     getData();
-  }, []);
+  }, [page]);
+
+  const loadMore = async () => {
+    setPage(page + 1);
+    console.log(page);
+  };
 
   return (
     <Container>
@@ -38,11 +44,26 @@ const List = ({ data, setData }: Props) => {
           <h1 className="location">{data.location}</h1>
         </div>
       ))}
+      <More onClick={loadMore}>Load More</More>
     </Container>
   );
 };
 
 export default List;
+
+const More = styled.button`
+  margin-top: 32px;
+  padding: 16px 30px;
+  border-radius: 5px;
+  background: #5964e0;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
 
 const Logo = styled.div<{ bgColor: string }>`
   width: 50px;

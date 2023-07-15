@@ -7,13 +7,14 @@ import { DevJob } from "./types";
 
 function App() {
   const [data, setData] = useState<DevJob[] | []>([]);
+  const [light, setLight] = useState<boolean>(true);
 
   return (
     <Container>
-      <Header />
+      <GlobalStyle />
+      <Header light={light} setLight={setLight} />
       <Filter />
       <List data={data} setData={setData} />
-      <GlobalStyle />
     </Container>
   );
 }

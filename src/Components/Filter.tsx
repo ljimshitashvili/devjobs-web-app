@@ -3,9 +3,10 @@ import { bgFilter, searchIconMOB } from "../assets/index";
 
 interface Props {
   setString: (filterString: string) => void;
+  switchFilter: () => void;
 }
 
-const Filter = ({ setString }: Props) => {
+const Filter = ({ setString, switchFilter }: Props) => {
   const filter = (e: React.ChangeEvent<HTMLInputElement>) => {
     setString(e.target.value);
   };
@@ -14,7 +15,7 @@ const Filter = ({ setString }: Props) => {
     <FilterContainer>
       <input onChange={filter} type="text" placeholder="Filter by title..." />
       <div>
-        <img src={bgFilter} alt="Filter Icon" />
+        <img onClick={switchFilter} src={bgFilter} alt="Filter Icon" />
         <img src={searchIconMOB} alt="" />
       </div>
     </FilterContainer>

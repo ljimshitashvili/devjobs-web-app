@@ -9,9 +9,17 @@ interface Props {
   filterString: string;
   page: number;
   setPage: (page: number) => void;
+  filterLocation: string;
 }
 
-const List = ({ data, setData, filterString, page, setPage }: Props) => {
+const List = ({
+  data,
+  setData,
+  filterString,
+  page,
+  setPage,
+  filterLocation,
+}: Props) => {
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get(
@@ -24,12 +32,12 @@ const List = ({ data, setData, filterString, page, setPage }: Props) => {
   }, [page]);
 
   useEffect(() => {
-    if (filterString === "") {
+    if (filterString === "" && filterLocation === "") {
       setPage(1);
     } else {
       setPage(3);
     }
-  }, [filterString]);
+  }, [filterString, filterLocation]);
 
   const loadMore = () => {
     setPage(page + 1);
@@ -40,6 +48,9 @@ const List = ({ data, setData, filterString, page, setPage }: Props) => {
       {data
         .filter((data) =>
           data.position.toLowerCase().includes(filterString.toLowerCase())
+        )
+        .filter((data) =>
+          data.location.toLowerCase().includes(filterLocation.toLowerCase())
         )
         .map((data, index) => (
           <div className="card" key={index}>

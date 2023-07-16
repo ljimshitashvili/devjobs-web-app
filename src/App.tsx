@@ -9,6 +9,7 @@ function App() {
   const [data, setData] = useState<DevJob[] | []>([]);
   const [light, setLight] = useState<boolean>(true);
   const [filterString, setString] = useState<string>("");
+  const [filterLocation, setLocation] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [window, setWindow] = useState<boolean>(false);
 
@@ -24,19 +25,41 @@ function App() {
     setWindow(!window);
   };
 
+  const overlayClick = () => {
+    switchFilter();
+    setLocation("");
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const locationInput = e.currentTarget.elements.namedItem(
+      "location"
+    ) as HTMLInputElement;
+    setLocation(locationInput.value);
+    switchFilter();
+  };
+
+  useEffect(() => {
+    console.log(filterLocation);
+  }, [filterLocation]);
+
   return (
     <Container>
-      <Overlay window={window} onClick={switchFilter} />
-      <Window window={window}>
+      <Overlay window={window} onClick={overlayClick} />
+      <Window window={window} onSubmit={handleSubmit}>
         <div>
           <img src={locationIcon} alt="Location Icon" />
-          <input type="text" placeholder="Filter by location..." />
+          <input
+            type="text"
+            name="location"
+            placeholder="Filter by location..."
+          />
         </div>
         <hr />
         <label>
           <input type="checkbox" /> Full Time Only
         </label>
-        <button>Search</button>
+        <button type="submit">Search</button>
       </Window>
       <GlobalStyle />
       <Header light={light} setLight={setLight} />
@@ -47,6 +70,7 @@ function App() {
         filterString={filterString}
         page={page}
         setPage={setPage}
+        filterLocation={filterLocation}
       />
     </Container>
   );
@@ -69,9 +93,9 @@ const Container = styled.div`
 `;
 
 const Overlay = styled.div<{ window: boolean }>`
-  position: absolute;
+  position: fixed;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: black;
   opacity: 0.2;
   z-index: 1;

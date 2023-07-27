@@ -10,6 +10,7 @@ interface Props {
   page: number;
   setPage: (page: number) => void;
   filterLocation: string;
+  filterContract: string;
 }
 
 const List = ({
@@ -19,6 +20,7 @@ const List = ({
   page,
   setPage,
   filterLocation,
+  filterContract,
 }: Props) => {
   useEffect(() => {
     const getData = async () => {
@@ -32,17 +34,16 @@ const List = ({
   }, [page]);
 
   useEffect(() => {
-    if (filterString === "" && filterLocation === "") {
+    if (filterString === "" && filterLocation === "" && filterContract === "") {
       setPage(1);
     } else {
       setPage(3);
     }
-  }, [filterString, filterLocation]);
+  }, [filterString, filterLocation, filterContract]);
 
   const loadMore = () => {
     setPage(page + 1);
   };
-
   return (
     <Container>
       {data
@@ -51,6 +52,9 @@ const List = ({
         )
         .filter((data) =>
           data.location.toLowerCase().includes(filterLocation.toLowerCase())
+        )
+        .filter((data) =>
+          data.contract.toLowerCase().includes(filterContract.toLowerCase())
         )
         .map((data, index) => (
           <div className="card" key={index}>

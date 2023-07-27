@@ -10,6 +10,8 @@ function App() {
   const [light, setLight] = useState<boolean>(true);
   const [filterString, setString] = useState<string>("");
   const [filterLocation, setLocation] = useState<string>("");
+  const [filterContract, setContract] = useState<string>("");
+  const [checkBox, setCheckBox] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [window, setWindow] = useState<boolean>(false);
 
@@ -23,6 +25,15 @@ function App() {
 
   const switchFilter = () => {
     setWindow(!window);
+  };
+
+  const switchBox = () => {
+    setCheckBox(!checkBox);
+    if (checkBox) {
+      setContract("full");
+    } else {
+      setContract("");
+    }
   };
 
   const overlayClick = () => {
@@ -57,7 +68,7 @@ function App() {
         </div>
         <hr />
         <label>
-          <input type="checkbox" /> Full Time Only
+          <input type="checkbox" onClick={switchBox} /> Full Time Only
         </label>
         <button type="submit">Search</button>
       </Window>
@@ -65,6 +76,7 @@ function App() {
       <Header light={light} setLight={setLight} />
       <Filter setString={setString} switchFilter={switchFilter} />
       <List
+        filterContract={filterContract}
         data={data}
         setData={setData}
         filterString={filterString}
